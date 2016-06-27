@@ -6,7 +6,7 @@
     <solid android:color="@color/counter_text_bg" >
     </solid>
 
-    <!-- Si queres agregar algun espacio  -->
+    <!-- Si queres agregar algun espacio -->
     <padding
         android:right="3dp"
         android:left="3dp" >
