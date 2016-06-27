@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="list_divider">#272727</color>
     <color name="list_background">#303030</color>
+
+    <!--Color al estar active un item del memu-->
+    <color name="list_background_pressed">#992416</color>
 </resources>
