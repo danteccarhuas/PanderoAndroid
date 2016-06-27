@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class activity_login extends Activity implements View.OnClickListener{
 
-    Button btn_login;
+    private Button btn_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
