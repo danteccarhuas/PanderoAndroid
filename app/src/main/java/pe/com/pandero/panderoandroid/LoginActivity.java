@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-
+    Button btn_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,10 @@ public class LoginActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
+        btn_login=(Button)findViewById(R.id.btn_login);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,5 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_login:
+                Toast.makeText(LoginActivity.this,"HOla Que tal",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }
