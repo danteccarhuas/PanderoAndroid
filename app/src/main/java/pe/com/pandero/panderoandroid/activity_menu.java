@@ -62,6 +62,7 @@ public class activity_menu extends Activity {
         // Recycle the typed array
         navMenuIcons.recycle();
 
+
         //mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
         // setting the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(),
