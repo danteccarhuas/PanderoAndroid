@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -49,7 +50,7 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
 
     private String codigo;
 
-    List<ObligacionesBean> lisObligacion=new ArrayList<ObligacionesBean>();
+    List<ObligacionesBean> lisObligacion=null;
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -77,8 +78,6 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
 
         btnConsultar.setOnClickListener(this);
 
-        // Cargar los productos en el Background Thread
-        new LoadAllProducts().execute();
 
 
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -98,7 +97,9 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnConsultar:
-                    //ListarOgligacionesXSocio();
+                // Cargar los productos en el Background Thread
+                codigo=etCodigo.getText().toString();
+                new LoadAllProducts().execute();
                 break;
         }
     }
@@ -122,10 +123,12 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
          * obteniendo todos los productos
          * */
         protected String doInBackground(String... args) {
+
+            lisObligacion=new ArrayList<ObligacionesBean>();
             // Building Parameters
             List params = new ArrayList();
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_all_empresas, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(url_all_empresas, "GET", params,codigo);
 
             // Check your log cat for JSON reponse
             Log.d("All Products: ", json.toString());
@@ -192,6 +195,10 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
                                     R.id.single_post_tv_id,
                                     R.id.single_post_tv_nombre,
                             });*/
+                    if(lisObligacion.size()==0){
+                        Toast.makeText(activity_reporteObligacionSocio.this,"No se econtraron Obligaciones del Codigo "+codigo.toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
                     ArrayAdapter<ObligacionesBean>adapter=
                             new ArrayAdapter<ObligacionesBean>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line,lisObligacion);
                     // updating listview

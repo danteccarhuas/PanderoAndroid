@@ -31,7 +31,7 @@
                         android:id="@+id/etCodigo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Ingresar Codigo Socio"
+                        android:hint="Ingresar Codigo"
                         android:gravity="center_vertical|center_horizontal" />
 
                 </LinearLayout>

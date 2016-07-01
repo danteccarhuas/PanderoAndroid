@@ -35,7 +35,7 @@ public class JSONParser {
     // function get json from url
     // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method,
-                                      List params) {
+                                      List params,String id) {
 
         // Making HTTP request
         try {
@@ -56,7 +56,7 @@ public class JSONParser {
                 // request method is GET
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, "utf-8");
-                url += "?" + paramString;
+                url += "?id=" + id;
                 HttpGet httpGet = new HttpGet(url);
 
                 HttpResponse httpResponse = httpClient.execute(httpGet);
