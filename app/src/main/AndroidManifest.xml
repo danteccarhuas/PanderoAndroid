@@ -2,26 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pe.com.pandero.panderoandroid">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".activity_login"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    <activity
-        android:name=".activity_menu">
-
-    </activity>
-    </application>
-    <!--<application
+    <!--
+        <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -36,11 +19,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!<activity android:name=".activity_menu"></activity>--><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+        <!<activity android:name=".activity_menu"></activity>
+    -->
+    <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-    </application>-->
+    </application>
+    -->
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity_reporteObligacionSocio"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--<activity android:name=".activity_menu"></activity>-->
+       <!-- <activity
+            android:name=".activity_reporteObligacionSocio"
+            android:label="@string/title_activity_activity_reporte_obligacion_socio"
+            android:theme="@style/AppTheme.NoActionBar"></activity>-->
+    </application>
+
+    <uses-sdk android:minSdkVersion="9" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

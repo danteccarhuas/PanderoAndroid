@@ -25,4 +25,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile files('src/main/java/libreria/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar')
+    compile files('src/main/java/libreria/org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar')
 }
