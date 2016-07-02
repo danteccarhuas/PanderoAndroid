@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
     private Button btnConsultar;
     private ListView lstListObligaciones;
     private LinearLayout linear_layoutDetalleObligacion;
+
+    private ScrollView scrollView;
 
     /*text para llenar Detalle*/
     private TextView tvSocio,tvFechaRegistro,tvCuotas,tvTasaInteres,tvMontoTotal,tvTipoOblgacion;
@@ -101,6 +104,12 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
         tvTasaInteres=(TextView)findViewById(R.id.tvTasaInteres);
         tvMontoTotal=(TextView)findViewById(R.id.tvMontoTotal);
         tvTipoOblgacion=(TextView)findViewById(R.id.tvTipoOblgacion);
+
+        scrollView=(ScrollView)findViewById(R.id.scrollView);
+
+        /*Ocultar el scroll view*/
+        scrollView.setVerticalScrollBarEnabled(false);
+        scrollView.setHorizontalScrollBarEnabled(false);
 
         lstListObligaciones.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -155,7 +164,7 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(activity_reporteObligacionSocio.this);
-            pDialog.setMessage("Cargando comercios. Por favor espere...");
+            pDialog.setMessage("Cargando Obligaciones. Por favor espere...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
@@ -242,7 +251,7 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(activity_reporteObligacionSocio.this);
-            pDialog.setMessage("Cargando comercios. Por favor espere...");
+            pDialog.setMessage("Cargando Detalle de Obligaciones. Por favor espere...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();

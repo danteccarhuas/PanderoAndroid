@@ -60,21 +60,41 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ListView
-            xmlns:app="http://schemas.android.com/tools"
-            app:font="@{`RobotoCondensed_Light.ttf`}"
-            android:background="#4758"
-            android:verticalSpacing="1dp"
-            android:horizontalSpacing="1dp"
-            android:stretchMode="columnWidth"
-            android:numColumns="2"
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/lstListObligaciones"
-            android:gravity="left"
             android:layout_weight="0.4">
 
-        </ListView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ListView
+                        xmlns:app="http://schemas.android.com/tools"
+                        app:font="@{`RobotoCondensed_Light.ttf`}"
+                        android:background="#4758"
+                        android:verticalSpacing="1dp"
+                        android:horizontalSpacing="1dp"
+                        android:stretchMode="columnWidth"
+                        android:numColumns="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="394dp"
+                        android:id="@+id/lstListObligaciones"
+                        android:gravity="left">
+
+                    </ListView>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear_layoutDetalleObligacion"
