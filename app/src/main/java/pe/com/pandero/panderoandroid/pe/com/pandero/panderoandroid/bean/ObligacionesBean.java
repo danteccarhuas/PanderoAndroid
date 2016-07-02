@@ -57,7 +57,7 @@ public class ObligacionesBean {
         this.tipo_obligacion = tipo_obligacion;
     }
     public String toString(){
-        return idobligaciones+" - "+fecha_registro+" - "+cuotas+" - "+tasa_interes;
+        return idobligaciones;
     }
 }
 

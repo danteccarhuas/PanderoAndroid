@@ -10,10 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -47,6 +54,10 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
     private EditText etCodigo;
     private Button btnConsultar;
     private ListView lstListObligaciones;
+    private LinearLayout linear_layoutDetalleObligacion;
+
+    /*text para llenar Detalle*/
+    private TextView tvSocio,tvFechaRegistro,tvCuotas,tvTasaInteres,tvMontoTotal,tvTipoOblgacion;
 
     private String codigo;
 
@@ -56,17 +67,21 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
     private ProgressDialog pDialog;
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
-    // url to get all products list
-    private static String url_all_empresas = "http://serviceandroid.esy.es/serviceconnect/get_ObligacionXSocio.php";
+    // url to get all obligaciones list
+    private static String url_obligacion = "http://serviceandroid.esy.es/serviceconnect/get_ObligacionXSocio.php";
+    private static String url_Detalleobligacion = "http://serviceandroid.esy.es/serviceconnect/ObtenerDetalleObligacionXCodigo.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_PRODUCTS = "obligacion";
-    private static final String TAG_ID = "id";
-    private static final String TAG_NOMBRE = "nombre";
+    private static final String TAG_OBLIGACION = "obligacion";
+    private static final String TAG_DETALLEOBLIGACION = "Detalleobligacion";
 
-    // products JSONArray
-    JSONArray products = null;
+    // obligaciones JSONArray
+    JSONArray obligaciones = null;
+    JSONArray Detalleobligaciones = null;
+
+    /*idObigacion*/
+    String idObligacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +91,29 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
         btnConsultar=(Button)findViewById(R.id.btnConsultar);
         lstListObligaciones=(ListView)findViewById(R.id.lstListObligaciones);
 
+        linear_layoutDetalleObligacion=(LinearLayout)findViewById(R.id.linear_layoutDetalleObligacion);
+
         btnConsultar.setOnClickListener(this);
 
+        tvSocio=(TextView)findViewById(R.id.tvSocio);
+        tvFechaRegistro=(TextView)findViewById(R.id.tvFechaRegistro);
+        tvCuotas=(TextView)findViewById(R.id.tvCuotas);
+        tvTasaInteres=(TextView)findViewById(R.id.tvTasaInteres);
+        tvMontoTotal=(TextView)findViewById(R.id.tvMontoTotal);
+        tvTipoOblgacion=(TextView)findViewById(R.id.tvTipoOblgacion);
+
+        lstListObligaciones.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int arg2,
+                                    long arg3) {
+
+                idObligacion = ((TextView)view).getText().toString();
+                //Toast.makeText(activity_reporteObligacionSocio.this,item.toString(),Toast.LENGTH_SHORT).show();
+                ObtenerDetalleObligacion();
+            }
+
+        });
 
 
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -97,6 +133,12 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnConsultar:
+                /*Limpiar TextView*/
+                LimpiarDetalleTextView();
+                /*Oculte LayoutDetalleObligacion*/
+                ocultarLayoutDetalleObligacion();
+
+
                 // Cargar los productos en el Background Thread
                 codigo=etCodigo.getText().toString();
                 new LoadAllProducts().execute();
@@ -128,39 +170,29 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
             // Building Parameters
             List params = new ArrayList();
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_all_empresas, "GET", params,codigo);
+            JSONObject json = jParser.makeHttpRequest(url_obligacion, "GET", params,codigo);
 
             // Check your log cat for JSON reponse
-            Log.d("All Products: ", json.toString());
+            Log.d("All obligaciones: ", json.toString());
 
             try {
                 // Checking for SUCCESS TAG
                 int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
-                    // products found
-                    // Getting Array of Products
-                    products = json.getJSONArray(TAG_PRODUCTS);
+                    // Getting Array of obligaciones
+                    obligaciones = json.getJSONArray(TAG_OBLIGACION);
 
                     ObligacionesBean bean=null;
 
-                    // looping through All Products
-                    //Log.i("ramiro", "produtos.length" + products.length());
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject c = products.getJSONObject(i);
+                    for (int i = 0; i < obligaciones.length(); i++) {
+                        JSONObject c = obligaciones.getJSONObject(i);
 
-                        // Storing each json item in variable
-                       /* String id = c.getString(TAG_ID);
-                        String name = c.getString(TAG_NOMBRE);*/
-                        // creating new HashMap
                         bean = new ObligacionesBean();
                         bean.setIdobligaciones(c.getString("idobligaciones"));
                         bean.setFecha_registro(c.getString("fecha_registro"));
                         bean.setCuotas(c.getInt("cuotas"));
                         bean.setTasa_interes(c.getDouble("tasa_interes"));
-                        // adding each child node to HashMap key => value
-                        /*map.put(TAG_ID, id);
-                        map.put(TAG_NOMBRE, name);*/
 
                         lisObligacion.add(bean);
                     }
@@ -175,39 +207,152 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
          * After completing background task Dismiss the progress dialog
          * **/
         protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all products
+            // dismiss the dialog after getting all obligaciones
             pDialog.dismiss();
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
-                    /**
-                     * Updating parsed JSON data into ListView
-                     * */
-                    /*ListAdapter adapter = new SimpleAdapter(
-                            MyActivity.this,
-                            empresaList,
-                            R.layout.single_post,
-                            new String[] {
-                                    TAG_ID,
-                                    TAG_NOMBRE,
-                            },
-                            new int[] {
-                                    R.id.single_post_tv_id,
-                                    R.id.single_post_tv_nombre,
-                            });*/
-                    if(lisObligacion.size()==0){
+                    if(lisObligacion.size()==0 && codigo.toString()!=""){
                         Toast.makeText(activity_reporteObligacionSocio.this,"No se econtraron Obligaciones del Codigo "+codigo.toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }else if(lisObligacion.size()==0 && codigo.toString()==""){
+                        Toast.makeText(activity_reporteObligacionSocio.this,"Ingresar un CODIGO para la busqueda de Obligaciones",
                                 Toast.LENGTH_SHORT).show();
                     }
                     ArrayAdapter<ObligacionesBean>adapter=
                             new ArrayAdapter<ObligacionesBean>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line,lisObligacion);
-                    // updating listview
-                    //setListAdapter(adapter);
+
                     lstListObligaciones.setAdapter(adapter);
                 }
             });
         }
     }
 
+    public void ObtenerDetalleObligacion(){
+        new DetalleObligacion().execute();
+    }
 
+    class DetalleObligacion extends AsyncTask<String, String, String> {
+
+        String socio="",fechaRegistro="",cuotas="",tasaInteres="",MontoTotal="",tipo_obligacion="";
+        /**
+         * Antes de empezar el background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(activity_reporteObligacionSocio.this);
+            pDialog.setMessage("Cargando comercios. Por favor espere...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        /**
+         * obteniendo todos los productos
+         * */
+        protected String doInBackground(String... args) {
+
+            // getting JSON string from URL
+            JSONObject json = jParser.makeHttpRequestDetalleObligacion(url_Detalleobligacion, "GET",idObligacion);
+            // Check your log cat for JSON reponse
+            Log.d("All Deltalle Obligac : ", json.toString());
+            try {
+                // Checking for SUCCESS TAG
+                int success = json.getInt(TAG_SUCCESS);
+                if (success == 1) {
+                    // Getting Array of DetalleObligacion
+                    Detalleobligaciones = json.getJSONArray(TAG_DETALLEOBLIGACION);
+
+                    for (int i = 0; i < Detalleobligaciones.length(); i++) {
+                        JSONObject c = Detalleobligaciones.getJSONObject(i);
+                        socio=c.getString("socio");
+                        fechaRegistro=c.getString("fecha_registro");
+                        cuotas=c.getString("cuotas");
+                        tasaInteres=c.getString("tasa_interes");
+                        MontoTotal=c.getString("monoTotal");
+                        tipo_obligacion=c.getString("tipo_obligacion");
+                    }
+                }
+
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return  null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after getting all products
+            pDialog.dismiss();
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+
+                    /*LLenamos los textview*/
+                    tvSocio.setText(socio.toString());
+                    tvFechaRegistro.setText(fechaRegistro.toString());
+                    tvCuotas.setText(cuotas.toString());
+                    tvTasaInteres.setText(tasaInteres.toString());
+                    tvMontoTotal.setText(MontoTotal.toString());
+                    tvTipoOblgacion.setText(tipo_obligacion.toString());
+
+                    /*MostrarLinearLayoutDetalleObligacion*/
+
+                    mostrarLayoutDetalleObligacion();
+                }
+            });
+        }
+    }
+
+    void LimpiarDetalleTextView(){
+        tvSocio.setText("");
+        tvFechaRegistro.setText("");
+        tvCuotas.setText("");
+        tvTasaInteres.setText("");
+        tvMontoTotal.setText("");
+        tvTipoOblgacion.setText("");
+    }
+    public void mostrarLayoutDetalleObligacion()
+    {
+        if (linear_layoutDetalleObligacion.getVisibility() == View.GONE)
+        {
+            animar(true);
+            linear_layoutDetalleObligacion.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void ocultarLayoutDetalleObligacion()
+    {
+        if (linear_layoutDetalleObligacion.getVisibility() == View.VISIBLE)
+        {
+            animar(false);
+            linear_layoutDetalleObligacion.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void animar(boolean mostrar)
+    {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = null;
+        if (mostrar)
+        {
+            //desde la esquina inferior derecha a la superior izquierda
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        }
+        else
+        {    //desde la esquina superior izquierda a la esquina inferior derecha
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
+        }
+        //duración en milisegundos
+        animation.setDuration(500);
+        set.addAnimation(animation);
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+
+        linear_layoutDetalleObligacion.setLayoutAnimation(controller);
+        linear_layoutDetalleObligacion.startAnimation(animation);
+    }
 }
