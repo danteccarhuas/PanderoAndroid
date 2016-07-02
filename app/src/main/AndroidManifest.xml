@@ -37,7 +37,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity_reporteObligacionSocio"
-            android:label="@string/app_name">
+            android:label="@string/app_namereporteObligacionSocio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
