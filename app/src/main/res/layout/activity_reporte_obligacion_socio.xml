@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:weightSum="1"
-                android:layout_gravity="bottom"
+
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:orientation="horizontal">
