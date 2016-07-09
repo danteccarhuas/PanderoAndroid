@@ -150,12 +150,12 @@ public class activity_reporteObligacionSocio extends AppCompatActivity implement
 
                 // Cargar los productos en el Background Thread
                 codigo=etCodigo.getText().toString();
-                new LoadAllProducts().execute();
+                new BuscaSocios().execute();
                 break;
         }
     }
 
-    class LoadAllProducts extends AsyncTask<String, String, String> {
+    class BuscaSocios extends AsyncTask<String, String, String> {
 
         /**
          * Antes de empezar el background thread Show Progress Dialog
