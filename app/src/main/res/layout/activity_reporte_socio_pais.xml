@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:weightSum="1"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/etCodigo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Ingresar Codigo"
+                        android:gravity="center_vertical|center_horizontal" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/btnConsultar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Consultar"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:padding="5dp"
+            android:id="@+id/linear_layoutSocio">
+
+            <TextView
+                style="@style/letras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:id="@+id/tvPaises" />
+
+            <LinearLayout
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="CODIGO"
+                    android:id="@+id/CODIGO" />
+
+                <TextView
+                    style="@style/tvStyleDetalle"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tvCodigo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="SOCIO"
+                    android:id="@+id/SOCIO" />
+
+                <TextView
+                    style="@style/tvStyleDetalle"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tvSocio" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="DOCUMENTO"
+                    android:id="@+id/DOCUMENTO" />
+
+                <TextView
+                    style="@style/tvStyleDetalle"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tvDocumento" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="CORREO"
+                    android:id="@+id/CORREO" />
+
+                <TextView
+                    style="@style/tvStyleDetalle"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tvCorreo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tvStyle"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="PAIS"
+                    android:id="@+id/PAIS" />
+
+                <TextView
+                    style="@style/tvStyleDetalle"
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tvPais" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollView">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ListView
+                        xmlns:app="http://schemas.android.com/tools"
+                        app:font="@{`RobotoCondensed_Light.ttf`}"
+                        android:background="#4758"
+                        android:verticalSpacing="1dp"
+                        android:horizontalSpacing="1dp"
+                        android:stretchMode="columnWidth"
+                        android:numColumns="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="394dp"
+                        android:id="@+id/lstListSocios"
+                        android:gravity="left">
+                    </ListView>
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

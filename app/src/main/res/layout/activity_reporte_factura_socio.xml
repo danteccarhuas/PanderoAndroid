@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:weightSum="1"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/etSocio"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Ingresar Codigo"
+                        android:gravity="center_vertical|center_horizontal" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btnBuscar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Consultar"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            xmlns:app="http://schemas.android.com/tools"
+            app:font="@{`RobotoCondensed_Light.ttf`}"
+            android:background="#4758"
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
+            android:stretchMode="columnWidth"
+            android:numColumns="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lstListaFacturas"
+            android:gravity="left">
+
+
+
+        </ListView>
+
+    </LinearLayout>
+
+</LinearLayout>
